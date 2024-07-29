@@ -1,0 +1,62 @@
+void setup() {
+  pinMode(8, OUTPUT); //trig
+  pinMode(9, INPUT); //echo
+  pinMode(10, OUTPUT);  //Dc motor 1
+  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);  //Dc motor 2
+ pinMode(13, OUTPUT);
+
+  Serial2.begin(9600);
+}
+
+void loop() {
+  char data;
+  data=Serial2.read();
+  Serial2.println(data);
+
+ long distance,duration;
+digitalWrite(8,LOW);
+delayMicroseconds(2);
+digitalWrite(8,HIGH);
+delayMicroseconds(10);
+digitalWrite(8,LOW);
+duration = pulseIn(9,HIGH);
+distance = (duration/2) / 29.1;
+Serial.println(distance);
+Serial2.println(data);
+
+
+  if(distance <=10)
+  {
+    digitalWrite(10, LOW);
+    digitalWrite(11, LOW);
+    digitalWrite(12, LOW);
+    digitalWrite(13, LOW);
+  }
+
+  if (data == 'f') {
+    digitalWrite(10, HIGH);
+    digitalWrite(11, LOW);
+    digitalWrite(12, HIGH);
+    digitalWrite(13, LOW);
+  }
+  if (data == 'b') {
+    digitalWrite(10, LOW);
+    digitalWrite(11, HIGH);
+    digitalWrite(12, LOW);
+    digitalWrite(13, HIGH);
+  }
+  if (data == 'r') {
+    digitalWrite(10, LOW);
+    digitalWrite(11, LOW);
+    digitalWrite(12, HIGH);
+    digitalWrite(13, LOW);
+  }
+  if (data == 'l') {
+    digitalWrite(10, HIGH);
+    digitalWrite(11, LOW);
+    digitalWrite(12, LOW);
+    digitalWrite(13, LOW);
+  }
+  
+}
